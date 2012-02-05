@@ -7,7 +7,6 @@ import (
 	"runtime"
 	"sync"
 	"sync/atomic"
-	. "tictactoe"
 	"time"
 )
 
@@ -18,16 +17,16 @@ func main() {
 	runtime.GOMAXPROCS(*nCPU) // Set number of OS threads to use.
 
 	// Build the game graph.
-	t := time.Nanoseconds()
+	t := time.Now().UnixNano()
 	g := MakeGraph()
-	t = time.Nanoseconds() - t
+	t = time.Now().UnixNano() - t
 	fmt.Printf("make graph: %dms\n", t/1e6)
 	fmt.Printf("states/edges: %d/%d\n", g.Nodes, g.Edges)
 
 	// Count X wins.
-	t = time.Nanoseconds()
+	t = time.Now().UnixNano()
 	CountWins(g)
-	t = time.Nanoseconds() - t
+	t = time.Now().UnixNano() - t
 	fmt.Printf("count: %dms\n", t/1e6)
 	fmt.Printf("x wins: %d\n", g.Wins)
 }

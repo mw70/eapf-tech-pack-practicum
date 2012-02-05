@@ -4,8 +4,6 @@
 CC=gcc
 CXX=g++
 MPICC=mpicc
-GOC=6g
-GOLINK=6l
 
 CFLAGS=-g
 LDFLAGS=-lm
@@ -17,10 +15,10 @@ PTHREADS_LIBS=-lpthread
 BOOST_LIBS = -I/opt/boost/include -L/opt/boost/lib -lboost_thread
 ARBB_LIBS=$(TBB_LIBS) -larbb -L/opt/intel/arbb/1.0.0.022/lib/intel64/ -I/opt/intel/arbb/1.0.0.022/include/
 
-all:  dd_serial dd_omp dd_boost # dd_hadoop
+all:  dd_serial dd_omp dd_boost dd_go # dd_hadoop
 #	hadoop jar DDHadoop.jar edu.stolaf.cs.DDHadoop $(DFS)/in $(DFS)/out
 
-.SUFFIXES: .c .o .cu .cpp .go .6
+.SUFFIXES: .c .o .cu .cpp .go
 
 dd_serial:  dd_serial.cpp
 	$(CXX) -o dd_serial dd_serial.cpp
@@ -31,6 +29,9 @@ dd_omp:  dd_omp.cpp
 dd_boost:  dd_boost.cpp
 	$(CXX) $(LDFLAGS) $(TBB_LIBS) $(BOOST_LIBS) -o dd_boost dd_boost.cpp 
 
+dd_go: dd_go.go
+	go build $<
+
 dd_hadoop:  DDHadoop.jar
 
 DDHadoop.jar:  classes DDHadoop.java
@@ -40,3 +41,5 @@ DDHadoop.jar:  classes DDHadoop.java
 classes:  
 	mkdir classes
 
+clean:
+	rm -f *.o dd_serial dd_omp dd_boost dd_go
