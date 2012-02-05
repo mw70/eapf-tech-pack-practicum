@@ -7,7 +7,7 @@ import (
 	"flag"
 	"fmt"
 	"math"
-	"rand"
+	"math/rand"
 	"runtime"
 	"sync"
 	"sync/atomic"
@@ -30,15 +30,15 @@ func main() {
 	runtime.GOMAXPROCS(*nCPU) // Set number of OS threads to use.
 
 	// Build random graph.
-	t := time.Nanoseconds()
+	t := time.Now().UnixNano()
 	g := MakeGraph(*nVertex, *nEdge)
-	t = time.Nanoseconds() - t
+	t = time.Now().UnixNano() - t
 	fmt.Printf("make graph: %dms\n", t/1e6)
 
 	// Parallel mark the graph.
-	t = time.Nanoseconds()
+	t = time.Now().UnixNano()
 	g.Mark()
-	t = time.Nanoseconds() - t
+	t = time.Now().UnixNano() - t
 	fmt.Printf("mark graph: %dms\n", t/1e6)
 }
 

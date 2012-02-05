@@ -1,7 +1,6 @@
-include $(GOROOT)/src/Make.inc
+dfs: dfs.go tictactoe.go
+	go build dfs.go tictactoe.go
 
-TARG=tictactoe
-GOFILES=\
-	tictactoe.go \
+clean:
+	rm -f dfs
 
-include $(GOROOT)/src/Make.pkg 

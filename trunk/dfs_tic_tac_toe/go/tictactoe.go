@@ -1,4 +1,4 @@
-package tictactoe
+package main
 
 const N = 3            // Board size is 3x3.
 type State int         // Packed game state.

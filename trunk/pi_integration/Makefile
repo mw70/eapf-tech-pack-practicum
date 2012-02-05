@@ -4,8 +4,6 @@
 CC=gcc
 CXX=g++
 MPICC=mpicc
-GOC=6g
-GOLINK=6l
 
 CFLAGS=-g
 LDFLAGS=-lm
@@ -32,8 +30,8 @@ pi_area_pthreads: pi_area_pthreads.o
 pi_area_omp: pi_area_omp.o
 	$(CC) $(LDFLAGS) $(OPENMP_FLAGS) -o pi_area_omp pi_area_omp.o
 
-pi_area_go: pi_area_go.6
-	$(GOLINK) -o pi_area_go pi_area_go.6
+pi_area_go: pi_area_go.go
+	go build $<
 
 pi_area_mpi: pi_area_mpi.o
 	$(MPICC) $(LDFLAGS) -o pi_area_mpi pi_area_mpi.o
@@ -47,10 +45,8 @@ pi_area_arbb: pi_area_arbb.cpp
 	icpc -o pi_area_arbb pi_area_arbb.cpp $(ARBB_LIBS)
 
 clean:
-	rm -f *.o *.6 *.t pi_area_serial pi_area_omp pi_area_go pi_area_mpi pi_area_cuda
+	rm -f *.o *.t pi_area_serial pi_area_omp pi_area_go pi_area_mpi pi_area_cuda
 
 .cu.o:
 	$(NVCC) -c $< $(NVCCFLAGS) $(CUDA_CFLAGS) $(CUDA_LIBS)
 
-.go.6:
-	$(GOC) -c $<

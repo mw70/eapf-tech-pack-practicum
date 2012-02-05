@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"rand"
+	"math/rand"
 	"runtime"
 	"sort"
 )
