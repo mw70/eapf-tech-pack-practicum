@@ -4,18 +4,19 @@
 CC=gcc
 CXX=g++
 MPICC=mpicc
+CUDA_INSTALL = /usr/local
 
 CFLAGS=-g
 LDFLAGS=-lm
 OPENMP_FLAGS=-fopenmp
-CUDA_CFLAGS = -I/usr/local/cuda/include
-CUDA_LIBS = -L/usr/local/cuda/lib -lcuda -lcudart
+CUDA_CFLAGS = -I$(CUDA_INSTALL)/cuda/include
+CUDA_LIBS = -L$(CUDA_INSTALL)/cuda/lib -lcuda -lcudart
 TBB_LIBS = -I/opt/intel/tbb/latest/include -ltbb -L/opt/intel/tbb/latest/lib/intel64/cc3.4.3_libc2.3.4_kernel2.6.9/
 PTHREADS_LIBS=-lpthread
 BOOST_LIBS = -I/opt/boost/include -L/opt/boost/lib -lboost_thread
 ARBB_LIBS=$(TBB_LIBS) -larbb -L/opt/intel/arbb/1.0.0.022/lib/intel64/ -I/opt/intel/arbb/1.0.0.022/include/
 
-all:  dd_serial dd_omp dd_boost dd_go # dd_hadoop
+default:  dd_serial dd_omp # dd_boost dd_go dd_hadoop
 #	hadoop jar DDHadoop.jar edu.stolaf.cs.DDHadoop $(DFS)/in $(DFS)/out
 
 .SUFFIXES: .c .o .cu .cpp .go
