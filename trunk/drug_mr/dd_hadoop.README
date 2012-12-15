@@ -1,0 +1,4 @@
+# Notes on setting up for hadoop target, drug_mr exemplar
+
+to explain:  
+hadoop jar DDHadoop.jar $(HADOOP_PACKAGE).DDHadoop $(DFS_DIR)/in $(DFS_DIR)/out

@@ -1,4 +1,4 @@
-// Java implementation of drug design exemplar for Hadoop
+// Java implementation of drug design exemplar for Hadoop 1.19 
 
 package edu.stolaf.cs;
 

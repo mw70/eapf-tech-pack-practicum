@@ -9,8 +9,7 @@ TBB_INSTALL = /opt/intel/tbb
 BOOST_INSTALL = /opt/boost
 ARBB_INSTALL = /opt/intel/arbb/1.0.0.022
 
-##### the following macros and rules typically do not require alteration,
-##### except to add/modify items for the default: target
+##### the following macros and rules typically do not require alteration
 CFLAGS=-g
 LDFLAGS=-lm
 OPENMP_FLAGS=-fopenmp
@@ -21,8 +20,16 @@ PTHREADS_LIBS=-lpthread
 BOOST_LIBS = -I$(BOOST_INSTALL)/include -L$(BOOST_INSTALL)/lib -lboost_thread
 ARBB_LIBS=$(TBB_LIBS) -larbb -L$(ARBB_INSTALL)/lib/intel64/ -I$(ARBB_INSTALL)/include/
 
-default:  dd_serial # dd_omp dd_boost dd_go dd_hadoop
-#	hadoop jar DDHadoop.jar edu.stolaf.cs.DDHadoop $(DFS)/in $(DFS)/out
+default:  serial
+
+serial:  dd_serial help
+openmp omp: dd_omp
+boost: dd_boost
+go: dd_go
+hadoop: dd_hadoop 
+
+help:  
+	@echo Available targets:  serial openmp boost go hadoop
 
 .SUFFIXES: .c .o .cu .cpp .go
 
@@ -36,7 +43,7 @@ dd_boost:  dd_boost.cpp
 	$(CXX) $(LDFLAGS) $(TBB_LIBS) $(BOOST_LIBS) -o dd_boost dd_boost.cpp 
 
 dd_go: dd_go.go
-	go build $<
+	go build dd_go.go
 
 dd_hadoop:  DDHadoop.jar
 
@@ -44,8 +51,11 @@ DDHadoop.jar:  classes DDHadoop.java
 	javac -classpath $(HADOOP_LIB) -d classes DDHadoop.java
 	jar cvf DDHadoop.jar -C classes edu
 
+DDHadoop.java:  dd_hadoop.java
+	cp dd_hadoop.java DDHadoop.java
+
 classes:  
 	mkdir classes
 
 clean:
-	rm -f *.o dd_serial dd_omp dd_boost dd_go
+	rm -f *.o dd_serial dd_omp dd_boost dd_go DDHadoop.java classes DDHadoop.jar
