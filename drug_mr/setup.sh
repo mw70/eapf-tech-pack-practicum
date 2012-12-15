@@ -1,4 +1,4 @@
-# source this on bash in order to define environment variables 
+# source this on bash before make in order to define environment variables 
 # for Tech Pack 2 example codes on Manycore Testing Lab 10/15/2011
 
 # Go
