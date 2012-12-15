@@ -1,0 +1,8 @@
+For each subdirectory D of this repository:
+  * D consists of source code and build config files (such as a Makefile)
+  * single-file source code examples are ordinariluy contained directly in D.
+    multi-file source code examples are contained within subdirectories of D.
+  * drug_mr/Makefile indicates standard format for a Makefile
+
+
+Last updated 12/15/2012
