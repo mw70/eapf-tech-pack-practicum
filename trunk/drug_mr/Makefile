@@ -22,7 +22,7 @@ ARBB_LIBS=$(TBB_LIBS) -larbb -L$(ARBB_INSTALL)/lib/intel64/ -I$(ARBB_INSTALL)/in
 
 default:  serial help
 
-serial:  dd_serial help
+serial:  dd_serial 
 openmp omp: dd_omp
 boost: dd_boost
 go: dd_go
