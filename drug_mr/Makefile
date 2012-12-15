@@ -20,7 +20,7 @@ PTHREADS_LIBS=-lpthread
 BOOST_LIBS = -I$(BOOST_INSTALL)/include -L$(BOOST_INSTALL)/lib -lboost_thread
 ARBB_LIBS=$(TBB_LIBS) -larbb -L$(ARBB_INSTALL)/lib/intel64/ -I$(ARBB_INSTALL)/include/
 
-default:  serial
+default:  serial help
 
 serial:  dd_serial help
 openmp omp: dd_omp
@@ -29,6 +29,8 @@ go: dd_go
 hadoop: dd_hadoop 
 
 help:  
+	@echo The command   make   builds a serial version and prints this message
+	@echo To build a parallel version, enter   make target
 	@echo Available targets:  serial openmp boost go hadoop
 
 .SUFFIXES: .c .o .cu .cpp .go
