@@ -1,6 +1,6 @@
 # Linux makefile for drug_mr 10/15/2011
-# be sure to source setup.sh
 
+##### customize these macros for your local system setup
 CC=gcc
 CXX=g++
 MPICC=mpicc
@@ -9,6 +9,8 @@ TBB_INSTALL = /opt/intel/tbb
 BOOST_INSTALL = /opt/boost
 ARBB_INSTALL = /opt/intel/arbb/1.0.0.022
 
+##### the following macros and rules typically do not require alteration,
+##### except to add/modify items for the default: target
 CFLAGS=-g
 LDFLAGS=-lm
 OPENMP_FLAGS=-fopenmp
