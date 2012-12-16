@@ -54,7 +54,7 @@ DDHadoop.jar:  classes DDHadoop.java
 	jar cvf DDHadoop.jar -C classes edu
 
 DDHadoop.java:  dd_hadoop.java
-	cp dd_hadoop.java DDHadoop.java
+	ln -s dd_hadoop.java DDHadoop.java
 
 classes:  
 	mkdir classes
