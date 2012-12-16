@@ -1,4 +1,54 @@
-# Notes on setting up for hadoop target, drug_mr exemplar
+Notes on setting up for hadoop target, drug_mr exemplar (Linux)
 
-to explain:  
-hadoop jar DDHadoop.jar $(HADOOP_PACKAGE).DDHadoop $(DFS_DIR)/in $(DFS_DIR)/out
+The  hadoop  parallel target for this exemplar will not generate working
+code without modifications and setup according to a local Hadoop
+installation, and not all of those changes can be specified in the drug_mr
+Makefile.  This document describes the steps necessary to build and
+run the  hadoop  implementation.
+
+1.  Hadoop installation
+
+The code in dd_hadoop.java was tested on version 1.20 of Hadoop, and
+should work on later versions.  Note that current versions of Hadoop
+typically specify configuration parameters using an auxiliary file in
+an XML format, but the current dd_hadoop.java code specifies necessary
+configuration parameters through internal method calls of a JobConf object;
+if some later version of Hadoop does not recognize this internal
+approach, then a corresponding XML file must be created and
+dd_hadoop.java modified accordingly.  
+
+(We used the JobConf method calls in dd_hadoop.java in order to contain
+the example code in a single file.)
+
+2.  Hadoop DFS files
+
+Hadoop maintains its own distributed file system (DFS), which is tuned
+for efficiently processing large-scale data.  When running the (built)
+code for Hadoop, you must specify two DFS directories:
+
+  * an input DFS directory containing the data files to be processed,
+    indicated below as $(DFS)/in;  and
+
+  * a destination DFS directory that will receive the output from
+    Hadoop processing, indicated below as $(DFS)/out
+
+The two DFS directories are passed as command-line arguments for this
+application.  Note that the prefix $(DFS) represents a path on the
+DFS, NOT the local file system.  Also, $(DFS)/in and its contents must
+exist on the DFS before launching the Hadoop job that will use it.  
+
+3.  Package name
+
+The package name (e.g., edu.stolaf.cs) specified at the top of
+dd_hadoop.java enables the java interpreter to find the class DDHadoop
+that is created by the dd_hadoop target.  This package name should be
+modified within dd_hadoop.java according to local conventions.  We
+will refer to that package name as $(PACKAGE) below.
+
+4. Running the Hadoop job from the command line
+
+To run the code built by the Makefile's hadoop target, enter the
+following Linux command on the head node for Hadoop computations.
+
+   hadoop jar DDHadoop.jar $(PACKAGE).DDHadoop $(DFS)/in $(DFS)/out
+
